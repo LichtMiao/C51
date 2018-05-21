@@ -1,0 +1,92 @@
+C51 COMPILER V9.00   MAIN                                                                  05/18/2018 19:53:38 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: F:\Software\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\List
+                    -ings\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include<reg52.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          sbit dula=P2^6;
+   5          sbit wela=P2^7;
+   6          sbit d1=P1^0;//控制第一个LED
+   7          uchar num,tt;
+   8          uchar code table[]={
+   9            0x3f,0x06,0x5b,0x4f,
+  10            0x66,0x6d,0x7d,0x07,
+  11            0x7f,0x6f,0x77,0x7c,
+  12            0x39,0x5e,0x79,0x71};//code是编码表
+  13          void delay(uint z);
+  14          void main()
+  15          {
+  16   1        num=0;
+  17   1        tt=0;
+  18   1        TMOD=0x01; //定时器T0工作在方式1：01
+  19   1        TH0=(65536-50000)/256;//计算初值 高八位
+  20   1        TL0=(65536-50000)%256; //低八位
+  21   1        //将外部中断0设置为电平触发 IT0=0;
+  22   1        //单片机打开默认是电平触发
+  23   1        EA=1; //打开总中断
+  24   1        ET0=1;//打开定时器0中断
+  25   1        TR0=1;//启动定时器0
+  26   1        wela=1; //一开始打开所有的位选
+  27   1        P0=0xea; //1110 1010
+  28   1        wela=0; 
+  29   1        dula=1;
+  30   1        P0=0x3f; //段选为0，不然进入循环时会出错，因为没定义段选，是随机的
+  31   1        //过1s选1
+  32   1        dula=0;
+  33   1        //改变要显示的数据
+  34   1        while(1)
+  35   1        {
+  36   2          if(tt==20) //进如20次中断
+  37   2          {
+  38   3            tt=0;
+  39   3            num++;
+  40   3            if(num==16)
+  41   3              num=0;
+  42   3            dula=1;
+  43   3            P0=table[num];
+  44   3            dula=0;
+  45   3            delay(1000);//延时1s
+  46   3          }
+  47   2        } 
+  48   1      }
+  49          //延时1ms
+  50          void delay(uint z)
+  51          {
+  52   1        uint x,y;
+  53   1        for(x=z;x>0;x--)
+  54   1        {
+C51 COMPILER V9.00   MAIN                                                                  05/18/2018 19:53:38 PAGE 2   
+
+  55   2          for(y=110;y>0;y--);
+  56   2        }
+  57   1      }
+  58          
+  59          //定时器中断0的服务程序
+  60          //进入中断后要重新装一次初值
+  61          void exter0() interrupt 1
+  62          {
+  63   1        TH0=(65536-50000)/256;//计算初值 高八位
+  64   1        TL0=(65536-50000)%256; //低八位
+  65   1        tt++;
+  66   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    112    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

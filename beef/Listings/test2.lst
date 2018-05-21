@@ -1,0 +1,82 @@
+C51 COMPILER V9.00   TEST2                                                                 05/19/2018 00:08:56 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE TEST2
+OBJECT MODULE PLACED IN .\Objects\test2.obj
+COMPILER INVOKED BY: F:\Software\Keil_v5\C51\BIN\C51.EXE test2.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\test2.lst) TABS(2) OBJECT(.\Objects\test2.obj)
+
+line level    source
+
+   1          #include<reg52.h>
+   2          #include<intrins.h>
+   3          #define uint unsigned int
+   4          #define uchar unsigned char
+   5          uchar temp,numdu,shi,ge;
+   6          sbit dula=P2^6;
+   7          sbit wela=P2^7;
+   8          uchar code table[]={
+   9            0x3f,0x06,0x5b,0x4f,
+  10            0x66,0x6d,0x7d,0x07,
+  11            0x7f,0x6f,0x77,0x7c,
+  12            0x39,0x5e,0x79,0x71};//数码管code
+  13          void delay(uint z);
+  14          void main()
+  15          {
+  16   1        
+  17   1        /***定时器T0初始化***/
+  18   1        TMOD=0x01; //定时器T0工作在方式1：01
+  19   1        TH0=(65536-50000)/256;//以2s为一次循环，50ms产生一次中断
+  20   1        TL0=(65536-50000)%256;
+  21   1        EA=1;//开总中断
+  22   1        ET0=1;//开定时器0中断
+  23   1        TR0=1;//启动定时器
+  24   1        
+  25   1        temp=12;
+  26   1        numdu=0;
+  27   1        while(1)
+  28   1        {
+  29   2          shi=temp/10;
+  30   2          ge=temp%10;
+  31   2          dula=1;
+  32   2          P0=table[shi];
+  33   2          dula=0;
+  34   2          wela=1;
+  35   2          P0=0xfe;
+  36   2          wela=0;
+  37   2          delay(5);
+  38   2          
+  39   2          dula=1;
+  40   2          P0=table[ge];
+  41   2          dula=0;
+  42   2          wela=1;
+  43   2          P0=0xfd;
+  44   2          wela=0;
+  45   2          delay(5);
+  46   2        }
+  47   1      }
+  48          //延时函数1ms
+  49          void delay(uint z)
+  50          {
+  51   1        uint x,y;
+  52   1        for(x=z;x>0;x--)
+  53   1        {
+  54   2          for(y=110;y>0;y--);
+C51 COMPILER V9.00   TEST2                                                                 05/19/2018 00:08:56 PAGE 2   
+
+  55   2        }
+  56   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    116    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

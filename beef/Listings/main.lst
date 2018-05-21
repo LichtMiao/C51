@@ -1,0 +1,90 @@
+C51 COMPILER V9.00   MAIN                                                                  05/19/2018 00:08:55 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: F:\Software\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\List
+                    -ings\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          /**
+   2          *让6个数码管每一个显示一个数，显示1到6
+   3          **/
+   4          #include<reg52.h>
+   5          #define uint unsigned int
+   6          #define uchar unsigned char
+   7          uchar temp,aa,numdu,numwe;
+   8          sbit dula=P2^6;
+   9          sbit wela=P2^7;
+  10          uchar code table[]={
+  11            0x3f,0x06,0x5b,0x4f,
+  12            0x66,0x6d,0x7d,0x07,
+  13            0x7f,0x6f,0x77,0x7c,
+  14            0x39,0x5e,0x79,0x71};//数码管段选code
+  15          uchar code tablewe[]={
+  16            0xfe,0xfd,0xfb,0xf7,
+  17            0xef,0xdf};//数码管位选code,一共6个数码管
+  18          
+  19          void main()
+  20          {
+  21   1        numdu=0;
+  22   1        numwe=0;  
+  23   1        aa=0;
+  24   1        /***定时器T0初始化***/
+  25   1        TMOD=0x01; //定时器T0工作在方式1：01
+  26   1        TH0=(65536-50000)/256;//以2s为一次循环，50ms产生一次中断
+  27   1        TL0=(65536-50000)%256;
+  28   1        EA=1;//开总中断
+  29   1        ET0=1;//开定时器0中断
+  30   1        TR0=1;//启动定时器
+  31   1        
+  32   1        /***刚开始时，需要让所有数码管不亮***/
+  33   1        
+  34   1        while(1)
+  35   1        {
+  36   2          if(aa==20)
+  37   2          {
+  38   3            aa=0;
+  39   3            //送段码
+  40   3            numdu++;
+  41   3            if(numdu==7) //只显示1到6之间的变化
+  42   3              numdu=1;
+  43   3            dula=1;
+  44   3            P0=table[numdu];
+  45   3            dula=0;
+  46   3            //送位码
+  47   3            wela=1;
+  48   3            P0=tablewe[numwe];
+  49   3            wela=0;
+  50   3            numwe++;
+  51   3            if(numwe==6) //只用6个数码管，限定不超过6
+  52   3              numwe=0;
+  53   3          }
+  54   2        }
+C51 COMPILER V9.00   MAIN                                                                  05/19/2018 00:08:55 PAGE 2   
+
+  55   1      }
+  56          
+  57          /***定义定时器0中断***/
+  58          void timer0() interrupt 1
+  59          {
+  60   1        TH0=(65536-50000)/256;//以2s为一次循环，50ms产生一次中断
+  61   1        TL0=(65536-50000)%256;
+  62   1        aa++;
+  63   1        //主函数中没有别的程序，则不需要把对它的操作放在这个中断程序里面
+  64   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     85    ----
+   CONSTANT SIZE    =     22    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,3 @@
+".\Objects\main.obj" 
+TO ".\Objects\dingshiqi" 
+PRINT(".\Listings\dingshiqi.m51") RAMSIZE(256) 

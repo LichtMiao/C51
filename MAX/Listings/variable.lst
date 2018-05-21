@@ -1,0 +1,63 @@
+C51 COMPILER V9.00   VARIABLE                                                              05/17/2018 21:57:48 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE VARIABLE
+OBJECT MODULE PLACED IN .\Objects\variable.obj
+COMPILER INVOKED BY: F:\Software\Keil_v5\C51\BIN\C51.EXE variable.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\
+                    -Listings\variable.lst) TABS(2) OBJECT(.\Objects\variable.obj)
+
+line level    source
+
+   1          //变量
+   2          #ifndef variable_H_
+   3          #define variable_H_
+   4          #define uchar unsigned char
+   5          #define uint unsigned int
+   6          #define firstbyte  0xf8
+   7          uchar tick_ratio;      //占空比设定 键盘按下次数
+   8          uchar tick_rate;         //频率设定 键盘按下次数
+   9          uchar rate_num[7];      //频率 设定数组
+  10          uchar ratio_num[2];     //占空比   设定数组
+  11          uchar *p_shape;
+  12          uchar *p_rate;
+  13          uchar *p_ratio;
+  14           long DA;
+  15          unsigned long sum=0;
+  16          float voltage_fre,rtp;
+  17          uint tys;
+  18          code uchar key_code[]={0x7b,0xe7,0xeb,0xed,0xd7,0xdb,0xdd,0xb7,0xbb,0xbd,0xee,0xde,0xbe,0x77,0x7d,0x7e};
+  19          code uchar ksp[]={0x7f,0xbf,0xdf,0xef};
+  20          code uchar Str1[]="波形发生器";
+  21          code uchar Str2[]="波形";
+  22          code uchar Str3[]="频率";
+  23          code uchar Str4[]="占空比";
+  24          code uchar Str1_set[]="设置";
+  25          code uchar shape2[]="1 sin";
+  26          code uchar shape3[]="2 squ";      
+  27          code uchar shape4[]="3 tri";
+  28          code uchar shape2_[]="sin";
+  29          code uchar shape3_[]="squ";     
+  30          code uchar shape4_[]="tri";
+  31          code uchar number[]="0123456789";
+  32          
+  33          bit SET;         //设置
+  34          bit ratio;         //占空比
+  35          bit rate;        //频率
+  36          bit shape; 
+  37          bit first;      //是否设置过
+  38          
+  39          #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =    108    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     38    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      5    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

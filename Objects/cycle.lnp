@@ -1,0 +1,3 @@
+".\Objects\main.obj" 
+TO ".\Objects\cycle" 
+PRINT(".\Listings\cycle.m51") RAMSIZE(256) 

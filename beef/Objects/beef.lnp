@@ -1,0 +1,5 @@
+".\Objects\main.obj",
+".\Objects\test1.obj",
+".\Objects\test2.obj" 
+TO ".\Objects\beef" 
+PRINT(".\Listings\beef.m51") RAMSIZE(256) 
