@@ -1,1 +1,1 @@
-This is my practice for reviewing C51.
+My practice for reviewing C51.
