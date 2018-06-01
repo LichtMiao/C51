@@ -1,0 +1,3 @@
+".\Objects\mian.obj" 
+TO ".\Objects\jianpan1" 
+PRINT(".\Listings\jianpan1.m51") RAMSIZE(256) 
